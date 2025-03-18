@@ -4,7 +4,6 @@
   <img src="https://github.com/user-attachments/assets/93698526-06c6-4210-8532-335de2774dd8" alt="RustDok Logo" width="500"/>
 </p>
 
-
 <p align="center">
   <strong>A modern, S3-compatible document storage and management system built with Rust</strong>
 </p>
@@ -15,6 +14,7 @@
   <a href="#features">Features</a> •
   <a href="#getting-started">Getting Started</a> •
   <a href="#deployment">Deployment</a> •
+  <a href="#oci-support">OCI Support</a> •
   <a href="#contributing">Contributing</a> •
   <a href="#license">License</a>
 </p>
@@ -82,7 +82,7 @@ The Kubernetes Helm chart for deploying RustDok in a Kubernetes environment. It 
 
 ### Prerequisites
 - Kubernetes 1.19+
-- Helm 3.2.0+
+- Helm 3.2.0+ (Helm 3.8.0+ for OCI registry support)
 - An S3-compatible storage service (primarily tested with Rook Ceph)
 
 ### Quick Start with Helm
@@ -91,6 +91,12 @@ The Kubernetes Helm chart for deploying RustDok in a Kubernetes environment. It 
    ```bash
    helm repo add rustdok https://stathis-ditc.github.io/rustdok-helm-chart
    helm repo update
+   ```
+
+   Alternatively, you can use the OCI-compliant Helm chart:
+   ```bash
+   # For Helm version 3.8.0 or later
+   helm install rustdok oci://ghcr.io/devs-in-the-cloud/charts/rustdok --version VERSION
    ```
 
 2. Create a values file (`my-values.yaml`) with your S3 configuration:
@@ -141,6 +147,24 @@ helm install rustdok rustdok/rustdok \
 ```bash
 helm install rustdok rustdok/rustdok --set webui.enabled=false
 ```
+
+## OCI Support
+
+RustDok provides full OCI (Open Container Initiative) support for both container images and Helm charts.
+
+### OCI-Compliant Container Images
+
+The RustDok images are published as OCI-compliant artifacts to the GitHub Container Registry:
+
+```bash
+# Pull the server image
+docker pull ghcr.io/devs-in-the-cloud/rustdok-server:latest
+
+# Pull the webui image
+docker pull ghcr.io/devs-in-the-cloud/rustdok-webui:latest
+```
+
+These images include OCI-specific annotations and are built with OCI media types for better compatibility with OCI-compliant container registries.
 
 ## Documentation
 
